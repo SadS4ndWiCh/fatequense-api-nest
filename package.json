@@ -16,7 +16,8 @@
     "next": "13.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "urllib": "^3.5.0"
+    "urllib": "^3.5.0",
+    "zod": "^3.19.1"
   },
   "devDependencies": {
     "@types/node": "18.11.9",
