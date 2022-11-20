@@ -5,6 +5,7 @@ import { getGXStateOf } from './_libs/utils';
 import { api } from './_libs/api';
 
 import { IDisciplineRaw } from '../../@types/gxstate';
+import { cookieRequestBody } from './_libs/schemas';
 
 export interface IDiscipline {
 	name: string;
@@ -23,7 +24,7 @@ const getDisciplineByCod = (allDisciplines: IDisciplineRaw[], targetCod: string)
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const { cookie } = req.body;
+	const { cookie } = cookieRequestBody.parse(req.body);
 
 	const { data: html, success } = await api.get('schedule', cookie);
 	if (!success) {

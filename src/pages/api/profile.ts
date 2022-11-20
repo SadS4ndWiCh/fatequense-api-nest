@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { getGXStateOf, getterGXStateWithPrefix } from './_libs/utils';
 import { api } from './_libs/api';
+import { cookieRequestBody } from './_libs/schemas';
 
 export interface IProfile {
 	name: string;
@@ -28,7 +29,7 @@ export interface CacheProfile {
 const cache: Record<string, CacheProfile> = {}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const { cookie } = req.body;
+	const { cookie } = cookieRequestBody.parse(req.body);
 
 	if (cookie in cache) {
 		return res.status(200).json({

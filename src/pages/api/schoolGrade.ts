@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { getGXStateOf } from './_libs/utils';
 import { api } from './_libs/api';
+import { cookieRequestBody } from './_libs/schemas';
 
 export type DisciplineState = 'dismissed' | 'approved' | 'attending' | 'not-attended' | 'unknown';
 
@@ -28,7 +29,7 @@ const statesCodes: Record<string, DisciplineState> = {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const { cookie } = req.body;
+	const { cookie } = cookieRequestBody.parse(req.body);
 
 	const { data: html, success } = await api.get('schoolGrade', cookie);
 	if (!success) {

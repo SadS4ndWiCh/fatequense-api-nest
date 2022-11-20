@@ -4,6 +4,7 @@ import { api } from './_libs/api';
 import { getGXStateOf } from './_libs/utils';
 
 import { ExamTitle } from '../../@types/gxstate';
+import { cookieRequestBody } from './_libs/schemas';
 
 export interface IDisciplineExamDate {
 	title: ExamTitle;
@@ -18,7 +19,7 @@ export interface IDisciplinePartialGrade {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const { cookie } = req.body;
+	const { cookie } = cookieRequestBody.parse(req.body);
 
 	const { data: html, success } = await api.get('partialGrade', cookie);
 	if (!success) {
