@@ -3,20 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getGXStateOf } from './_libs/utils';
 import { api } from './_libs/api';
 import { cookieRequestBody } from './_libs/schemas';
-
-export interface IDisciplineLessons {
-	title: string;
-	date: string;
-	presences: number;
-	absences: number;
-}
-export interface IDisciplinePartialAbsences {
-	cod: string;
-	disciplineName: string;
-	totalPresences: number;
-	totalAbsences: number;
-	lessons: IDisciplineLessons[];
-}
+import { IDisciplinePartialAbsences } from '../../@types/discipline';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { cookie } = cookieRequestBody.parse(req.body);

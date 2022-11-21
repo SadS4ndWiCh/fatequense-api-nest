@@ -3,23 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getGXStateOf, getterGXStateWithPrefix } from './_libs/utils';
 import { api } from './_libs/api';
 import { cookieRequestBody } from './_libs/schemas';
-
-export interface IProfile {
-	name: string;
-	personalEmail: string;
-	institutionalEmail: string;
-	cpf: string;
-	birthday: string;
-	averageGrade: number;
-	photoUrl?: string;
-	college: {
-		name: string;
-		state: string;
-		courseName: string;
-		coursePeriod: string;
-		currentSemester: number;
-	}
-}
+import { IProfile } from '../../@types/account';
 
 export interface CacheProfile {
 	cachedAt: number,

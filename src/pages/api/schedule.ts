@@ -6,18 +6,8 @@ import { api } from './_libs/api';
 
 import { IDisciplineRaw } from '../../@types/gxstate';
 import { cookieRequestBody } from './_libs/schemas';
+import { IDiscipline, ISchedule } from '../../@types/discipline';
 
-export interface IDiscipline {
-	name: string;
-	teacherName: string;
-}
-
-export interface ISchedule {
-	cod: string;
-	startsAt: Date;
-	endsAt: Date;
-	discipline: IDiscipline | null;
-}
 
 const getDisciplineByCod = (allDisciplines: IDisciplineRaw[], targetCod: string) => {
 	return allDisciplines.find(discipline => discipline.ACD_DisciplinaSigla === targetCod);

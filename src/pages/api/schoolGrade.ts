@@ -3,23 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getGXStateOf } from './_libs/utils';
 import { api } from './_libs/api';
 import { cookieRequestBody } from './_libs/schemas';
-
-export type DisciplineState = 'dismissed' | 'approved' | 'attending' | 'not-attended' | 'unknown';
-
-export interface IDisciplineGrade {
-	cod: string;
-	classHours: number;
-	name: string;
-	state: DisciplineState;
-	period?: string;
-	frequency?: number;
-	grade?: number;
-}
-
-export interface ISemester {
-	number: number;
-	disciplines: IDisciplineGrade[];
-}
+import { DisciplineState, IDisciplineGrade, ISemester } from '../../@types/discipline';
 
 const statesCodes: Record<string, DisciplineState> = {
 	"#418a58": "dismissed",
