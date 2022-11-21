@@ -4,9 +4,10 @@ import { getGXStateOf } from './_libs/utils/gxstate';
 import { api } from './_libs/api';
 import { cookieRequestBody } from './_libs/schemas';
 import { IDisciplinePartialAbsences } from '../../@types/discipline';
+import { withRouteOptions } from './_libs/utils/api-route';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const { cookie } = cookieRequestBody.parse(req.body);
+async function handler(req: NextApiRequest, res: NextApiResponse) {
+	const { cookie } = cookieRequestBody.parse(req.query);
 
 	const { data: html, success } = await api.get('partialAbsences', cookie);
 	if (!success) {
@@ -35,3 +36,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		partialAbsences,
 	});
 }
+
+export default withRouteOptions({
+	options: { allowedMethods: ['GET'] },
+	handler
+});

@@ -7,14 +7,15 @@ import { api } from './_libs/api';
 import { IDisciplineRaw } from '../../@types/gxstate';
 import { cookieRequestBody } from './_libs/schemas';
 import { IDiscipline, ISchedule } from '../../@types/discipline';
+import { withRouteOptions } from './_libs/utils/api-route';
 
 
 const getDisciplineByCod = (allDisciplines: IDisciplineRaw[], targetCod: string) => {
 	return allDisciplines.find(discipline => discipline.ACD_DisciplinaSigla === targetCod);
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const { cookie } = cookieRequestBody.parse(req.body);
+async function handler(req: NextApiRequest, res: NextApiResponse) {
+	const { cookie } = cookieRequestBody.parse(req.query);
 
 	const { data: html, success } = await api.get('schedule', cookie);
 	if (!success) {
@@ -82,3 +83,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		schedule,
 	})
 }
+
+export default withRouteOptions({
+	options: { allowedMethods: ['GET'] },
+	handler
+});

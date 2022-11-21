@@ -4,6 +4,7 @@ import { getGXStateOf, getterGXStateWithPrefix } from './_libs/utils/gxstate';
 import { api } from './_libs/api';
 import { cookieRequestBody } from './_libs/schemas';
 import { IProfile } from '../../@types/account';
+import { withRouteOptions } from './_libs/utils/api-route';
 
 export interface CacheProfile {
 	cachedAt: number,
@@ -12,8 +13,8 @@ export interface CacheProfile {
 
 const cache: Record<string, CacheProfile> = {}
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const { cookie } = cookieRequestBody.parse(req.body);
+async function handler(req: NextApiRequest, res: NextApiResponse) {
+	const { cookie } = cookieRequestBody.parse(req.query);
 
 	if (cookie in cache) {
 		return res.status(200).json({
@@ -64,3 +65,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		profile
 	});
 }
+
+export default withRouteOptions({
+	options: { allowedMethods: ['GET'] },
+	handler
+});

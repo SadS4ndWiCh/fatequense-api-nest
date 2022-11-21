@@ -5,9 +5,10 @@ import { getGXStateOf } from './_libs/utils/gxstate';
 
 import { cookieRequestBody } from './_libs/schemas';
 import { IDisciplinePartialGrade } from '../../@types/discipline';
+import { withRouteOptions } from './_libs/utils/api-route';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const { cookie } = cookieRequestBody.parse(req.body);
+async function handler(req: NextApiRequest, res: NextApiResponse) {
+	const { cookie } = cookieRequestBody.parse(req.query);
 
 	const { data: html, success } = await api.get('partialGrade', cookie);
 	if (!success) {
@@ -33,3 +34,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		partialGrades
 	});
 }
+
+export default withRouteOptions({
+	options: { allowedMethods: ['GET'] },
+	handler
+});

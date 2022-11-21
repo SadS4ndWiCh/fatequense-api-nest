@@ -4,6 +4,7 @@ import { getGXStateOf } from './_libs/utils/gxstate';
 import { api } from './_libs/api';
 import { cookieRequestBody } from './_libs/schemas';
 import { DisciplineState, IDisciplineGrade, ISemester } from '../../@types/discipline';
+import { withRouteOptions } from './_libs/utils/api-route';
 
 const statesCodes: Record<string, DisciplineState> = {
 	"#418a58": "dismissed",
@@ -12,8 +13,8 @@ const statesCodes: Record<string, DisciplineState> = {
 	"#ffffff": "not-attended",
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const { cookie } = cookieRequestBody.parse(req.body);
+async function handler(req: NextApiRequest, res: NextApiResponse) {
+	const { cookie } = cookieRequestBody.parse(req.query);
 
 	const { data: html, success } = await api.get('schoolGrade', cookie);
 	if (!success) {
@@ -71,3 +72,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 	return res.status(200).json({ semesters });
 }
+
+export default withRouteOptions({
+	options: { allowedMethods: ['GET'] },
+	handler
+});
