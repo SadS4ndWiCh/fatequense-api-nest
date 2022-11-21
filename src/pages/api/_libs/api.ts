@@ -1,9 +1,10 @@
 import { request } from "urllib";
-import { buildOptions, ROUTES, STATUS } from "./network";
+import { buildOptions, COOKIE_FIELD_NAME, ROUTES, STATUS } from "./network";
 
 export type Route = keyof typeof ROUTES;
 
 const get = async (route: Route, cookie: string) => {
+	cookie = cookie.includes(COOKIE_FIELD_NAME) ? cookie : `${COOKIE_FIELD_NAME}=${cookie}`
 	const requestGradeData = buildOptions({
 		method: 'GET',
 		route: ROUTES[route],
