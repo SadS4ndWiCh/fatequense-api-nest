@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { getGXStateOf } from './_libs/utils';
+import { getGXStateOf } from './_libs/utils/gxstate';
 import { api } from './_libs/api';
 import { cookieRequestBody } from './_libs/schemas';
 import { IDisciplinePartialAbsences } from '../../@types/discipline';

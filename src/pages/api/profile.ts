@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { getGXStateOf, getterGXStateWithPrefix } from './_libs/utils';
+import { getGXStateOf, getterGXStateWithPrefix } from './_libs/utils/gxstate';
 import { api } from './_libs/api';
 import { cookieRequestBody } from './_libs/schemas';
 import { IProfile } from '../../@types/account';

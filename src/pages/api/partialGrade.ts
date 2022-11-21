@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { api } from './_libs/api';
-import { getGXStateOf } from './_libs/utils';
+import { getGXStateOf } from './_libs/utils/gxstate';
 
 import { cookieRequestBody } from './_libs/schemas';
 import { IDisciplinePartialGrade } from '../../@types/discipline';

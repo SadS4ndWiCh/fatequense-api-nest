@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getDate, getDay, setDate, setHours, setMinutes } from 'date-fns';
 
-import { getGXStateOf } from './_libs/utils';
+import { getGXStateOf } from './_libs/utils/gxstate';
 import { api } from './_libs/api';
 
 import { IDisciplineRaw } from '../../@types/gxstate';
