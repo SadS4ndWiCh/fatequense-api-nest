@@ -4,6 +4,7 @@ import { getGXStateOf } from './_libs/utils/gxstate';
 import { api } from './_libs/api';
 import { cookieRequestBody } from './_libs/schemas';
 import { withRouteOptions } from './_libs/utils/api-route';
+import { getNotices } from './_libs/scrappers/notices.scrap';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { cookie } = cookieRequestBody.parse(req.query);
@@ -15,32 +16,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 		})
 	}
 
-	const { $ } = getGXStateOf(html);
-	const $table = $('#TABLE5');
-	$table
-		.find('script')
-		.remove()
-
-	const notices: string[] = $table
-		.find('tr')
-		.map((_, el) =>
-			$(el)
-				.find('p')
-				.map((_i, p) =>
-					$(p)
-						.text()
-						.trim()
-						.replaceAll('\n','')
-						.replaceAll('\t','')
-						.replaceAll(' ','')
-				)
-				.get()
-				.filter(text => text !== '')
-				.join('\n')
-		)
-		.get()
-		.filter((notice) => notice !== '');
-
+	const gxstate = getGXStateOf(html);
+	const notices = getNotices(gxstate);
+	
 	return res.status(200).json({ notices });
 }
 

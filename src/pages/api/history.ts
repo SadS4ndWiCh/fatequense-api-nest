@@ -5,6 +5,7 @@ import { api } from './_libs/api';
 import { cookieRequestBody } from './_libs/schemas';
 import { IDisciplineHistory } from '../../@types/discipline';
 import { withRouteOptions } from './_libs/utils/api-route';
+import { getHistory } from './_libs/scrappers/history.scrap';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { cookie } = cookieRequestBody.parse(req.query);
@@ -16,19 +17,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 		})
 	}
 
-	const { $, ...gxstate } = getGXStateOf(html);
+	const gxstate = getGXStateOf(html);
 
-	const history: IDisciplineHistory[] = gxstate.parsed['vALU_ALUNONOTAS_SDT']
-		.map((disciplineHistory): IDisciplineHistory => ({
-			cod: disciplineHistory.ACD_DisciplinaSigla,
-			disciplineName: disciplineHistory.ACD_DisciplinaNome,
-			description: disciplineHistory.GER_TipoObservacaoHistoricoDescricao,
-			finalGrade: disciplineHistory.ACD_AlunoHistoricoItemMediaFinal,
-			totalAbscences: disciplineHistory.ACD_AlunoHistoricoItemQtdFaltas,
-			presenceFrequency: disciplineHistory.ACD_AlunoHistoricoItemFrequencia / 100,
-			renunciantionAt: disciplineHistory.ACD_AlunoHistoricoItemDesistenciaData,
-			isApproved: disciplineHistory.ACD_AlunoHistoricoItemAprovada === 1
-		}));
+	const history = getHistory(gxstate);
 
 	return res.status(200).json({ history });
 }

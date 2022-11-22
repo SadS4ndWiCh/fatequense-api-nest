@@ -5,6 +5,7 @@ import { api } from './_libs/api';
 import { cookieRequestBody } from './_libs/schemas';
 import { IProfile } from '../../@types/account';
 import { withRouteOptions } from './_libs/utils/api-route';
+import { getProfile } from './_libs/scrappers/profile.scrap';
 
 export interface CacheProfile {
 	cachedAt: number,
@@ -29,32 +30,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 		})
 	}
 
-	const { $, ...gxstate } = getGXStateOf(html);
+	// const { $, ...gxstate } = getGXStateOf(html);
+	const gxstate = getGXStateOf(html);
 
 	if (gxstate.prefix == null) return res.status(500).json({
 		error: 'Não foi possível pegar os dados adequadamente'
 	})
 
-	const gxstateGet = getterGXStateWithPrefix(gxstate.prefix, gxstate.parsed);
-
-	const photoUrl = $(`#${gxstate.prefix}FOTO > img`).attr()?.src;
-
-	const profile: IProfile = {
-		name: gxstate.parsed['vPRO_PESSOALNOME'],
-		personalEmail: gxstate.parsed['vPRO_PESSOALEMAIL'],
-		institutionalEmail: gxstateGet('vINSTITUCIONALFATEC'),
-		cpf: gxstate.parsed['vPRO_PESSOALDOCSCPF'],
-		birthday: gxstate.parsed['vPRO_PESSOALDATANASCIMENTO'], 
-		averageGrade: Number(gxstateGet('vACD_ALUNOCURSOINDICEPR')),
-		photoUrl,
-		college: {
-			name: gxstate.parsed['vUNI_UNIDADENOME_MPAGE'],
-			courseName: gxstate.parsed['vACD_CURSONOME_MPAGE'],
-			currentSemester: Number(gxstateGet('vACD_ALUNOCURSOCICLOATUAL')),
-			coursePeriod: gxstate.parsed['vACD_PERIODODESCRICAO_MPAGE'],
-			state: gxstate.parsed['vSITUACAO_MPAGE'],
-		}
-	};
+	const profile = getProfile(gxstate);
 
 	cache[cookie] = {
 		cachedAt: Date.now(),

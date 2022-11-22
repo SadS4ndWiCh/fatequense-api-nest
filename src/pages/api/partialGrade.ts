@@ -6,6 +6,7 @@ import { getGXStateOf } from './_libs/utils/gxstate';
 import { cookieRequestBody } from './_libs/schemas';
 import { IDisciplinePartialGrade } from '../../@types/discipline';
 import { withRouteOptions } from './_libs/utils/api-route';
+import { getPartialGrade } from './_libs/scrappers/partialGrade.scrap';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { cookie } = cookieRequestBody.parse(req.query);
@@ -18,17 +19,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	}
 	const gxstate = getGXStateOf(html);
 
-	const partialGrades: IDisciplinePartialGrade[] = gxstate.parsed['vACD_ALUNONOTASPARCIAISRESUMO_SDT']
-		?.map((discipline): IDisciplinePartialGrade => ({
-			cod: discipline.ACD_DisciplinaSigla,
-			disciplineName: discipline.ACD_DisciplinaNome,
-			averageGrade: discipline.ACD_AlunoHistoricoItemMediaFinal,
-			examsDates: discipline.Datas.map(examDate => ({
-				title: examDate.ACD_PlanoEnsinoAvaliacaoTitulo,
-				startsAt: examDate.ACD_PlanoEnsinoAvaliacaoDataPrevista,
-				grade: examDate.Avaliacoes[0].ACD_PlanoEnsinoAvaliacaoParcialNota,
-			}))
-		}));
+	const partialGrades = getPartialGrade(gxstate);
 
 	return res.status(200).json({
 		partialGrades
