@@ -17,13 +17,13 @@ export const getterGXStateWithPrefix = (prefix: string, gxstate: Record<string, 
 	return (key: string) => gxstate[`${prefix}${key}`];
 }
 
-export interface GetGXStateOfProps {
+export interface IGetGXStateReturn {
 	default: string;
 	parsed: GXState,
 	prefix: string | null;
 	$: CheerioAPI;
 }
-export const getGXStateOf = (html: string): GetGXStateOfProps => {
+export const getGXStateOf = (html: string): IGetGXStateReturn => {
 	const $ = cheerio.load(html);
 
 	const gxstate = $('[name="GXState"]').val() as string;
