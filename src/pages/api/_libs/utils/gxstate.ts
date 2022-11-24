@@ -23,10 +23,11 @@ export interface IGetGXStateReturn {
 	prefix: string | null;
 	$: CheerioAPI;
 }
-export const getGXStateOf = (html: string): IGetGXStateReturn => {
+export const getGXStateOf = (html: string): IGetGXStateReturn | null => {
 	const $ = cheerio.load(html);
 
 	const gxstate = $('[name="GXState"]').val() as string;
+	if (!gxstate) return null;
 	const gxstateParsed = parseGXState(gxstate);
 	const gxstatePrefix = getGXStatePrefix(gxstate);
 
