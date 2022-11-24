@@ -23,6 +23,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	}
 
 	const gxstate = getGXStateOf(html);
+	if (gxstate === null) return res
+		.status(500)
+		.json({ error: 'Ocorreu um problema ao pegar as informações' });
 
 	if (gxstate.prefix == null) return res.status(500).json({
 		error: 'Não foi possível pegar os dados adequadamente'

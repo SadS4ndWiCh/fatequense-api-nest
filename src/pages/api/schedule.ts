@@ -18,6 +18,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	}
 
 	const gxstate = getGXStateOf(html);
+	if (gxstate === null) return res
+		.status(500)
+		.json({ error: 'Ocorreu um problema ao pegar as informações' });
 	const schedule = getSchedules(gxstate);
 
 	return res.status(200).json({
