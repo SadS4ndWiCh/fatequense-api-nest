@@ -4,7 +4,6 @@ import { api } from './_libs/api';
 import { getGXStateOf } from './_libs/utils/gxstate';
 
 import { cookieRequestBody } from './_libs/schemas';
-import { IDisciplinePartialGrade } from '../../@types/discipline';
 import { withRouteOptions } from './_libs/utils/api-route';
 import { getPartialGrade } from './_libs/scrappers/partialGrade.scrap';
 

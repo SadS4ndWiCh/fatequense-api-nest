@@ -1,6 +1,5 @@
 import * as cheerio from 'cheerio';
 import type { CheerioAPI } from 'cheerio';
-import { GXState } from '../../../../@types/gxstate';
 
 export const parseGXState = (gxstate: string): GXState => {
 	return JSON.parse(gxstate.replaceAll(/\\>/g,'&gt;'));
