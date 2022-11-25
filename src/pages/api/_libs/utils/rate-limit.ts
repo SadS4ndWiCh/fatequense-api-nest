@@ -1,8 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import LRU from 'lru-cache';
 
-import type { RateLimitOptions } from '../../../../@types/rate-limit';
-
 export const getIP = (req: NextApiRequest) => {
 	const ip = req.headers['x-forwarded-for'] ||
 						 req.headers['x-real-ip'] ||

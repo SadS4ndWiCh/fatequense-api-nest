@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import type { ApiRoute, ApiRouteOptions, RequestMethods } from '../../../../@types/api-route';
 import { getIP, rateLimit } from './rate-limit';
 
 type Props = {

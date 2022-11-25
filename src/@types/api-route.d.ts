@@ -1,11 +1,13 @@
-import type { RateLimitOptions } from './rate-limit';
+declare global {
+	type RequestMethods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'UPDATE' | 'PATCH';
 
-export type RequestMethods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'UPDATE' | 'PATCH';
-
-export type ApiRoute = (req: NextApiRequest, res: NextApiResponse) => Promise<any>;
-export type ApiRouteOptions = {
-	allowedMethods: RequestMethods[];
-	rateLimit?: RateLimitOptions & {
-		requests: number;
-	};
+	type ApiRoute = (req: NextApiRequest, res: NextApiResponse) => Promise<any>;
+	type ApiRouteOptions = {
+		allowedMethods: RequestMethods[];
+		rateLimit?: RateLimitOptions & {
+			requests: number;
+		};
+	}
 }
+
+export {};
