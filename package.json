@@ -1,5 +1,6 @@
 {
-  "name": "my-fatec",
+  "name": "fatequense-api",
+  "description": "An unofficial Siga api to get student informations easily",
   "version": "0.1.0",
   "private": true,
   "scripts": {
