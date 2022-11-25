@@ -1,4 +1,3 @@
-import { IDisciplineHistory } from "../../../../@types/discipline";
 import { IGetGXStateReturn } from "../utils/gxstate";
 
 export const getHistory = (gxstate: IGetGXStateReturn) => {

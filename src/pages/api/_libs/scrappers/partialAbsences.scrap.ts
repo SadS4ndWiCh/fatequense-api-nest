@@ -1,4 +1,3 @@
-import { IDisciplinePartialAbsences } from "../../../../@types/discipline";
 import { IGetGXStateReturn } from "../utils/gxstate";
 
 export const getPartialAbsences = (gxstate: IGetGXStateReturn) => {

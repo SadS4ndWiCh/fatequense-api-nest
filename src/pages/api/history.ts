@@ -3,7 +3,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getGXStateOf } from './_libs/utils/gxstate';
 import { api } from './_libs/api';
 import { cookieRequestBody } from './_libs/schemas';
-import { IDisciplineHistory } from '../../@types/discipline';
 import { withRouteOptions } from './_libs/utils/api-route';
 import { getHistory } from './_libs/scrappers/history.scrap';
 

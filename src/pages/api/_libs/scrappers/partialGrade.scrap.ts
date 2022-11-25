@@ -1,7 +1,5 @@
 import { IGetGXStateReturn } from "../utils/gxstate";
 
-import { IDisciplinePartialGrade } from "../../../../@types/discipline";
-
 export const getPartialGrade = (gxstate: IGetGXStateReturn) => {
 	const partialGrades: IDisciplinePartialGrade[] = gxstate.parsed['vACD_ALUNONOTASPARCIAISRESUMO_SDT']
 		?.map((discipline): IDisciplinePartialGrade => ({
