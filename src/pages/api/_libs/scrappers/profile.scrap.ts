@@ -1,7 +1,5 @@
 import { getterGXStateWithPrefix, IGetGXStateReturn } from "../utils/gxstate";
 
-import { IProfile } from "../../../../@types/account";
-
 export const getProfile = ({ $, ...gxstate }: IGetGXStateReturn) => {
 	const gxstateGet = getterGXStateWithPrefix(gxstate.prefix!, gxstate.parsed);
 

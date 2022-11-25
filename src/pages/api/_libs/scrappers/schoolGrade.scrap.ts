@@ -1,4 +1,3 @@
-import { DisciplineState, IDisciplineGrade, ISemester } from "../../../../@types/discipline";
 import { IGetGXStateReturn } from "../utils/gxstate";
 
 const statesCodes: Record<string, DisciplineState> = {

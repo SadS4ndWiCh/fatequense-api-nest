@@ -1,6 +1,4 @@
 import { getDate, getDay, setDate, setHours, setMinutes } from "date-fns";
-import { IDiscipline, ISchedule } from "../../../../@types/discipline";
-import { IDisciplineRaw } from "../../../../@types/gxstate";
 import { IGetGXStateReturn } from "../utils/gxstate";
 
 const getDisciplineByCod = (allDisciplines: IDisciplineRaw[], targetCod: string) => {
