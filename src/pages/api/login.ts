@@ -11,7 +11,7 @@ import {
 } from './_libs/network';
 import { authSigaBody } from './_libs/schemas';
 import { withRouteOptions } from './_libs/utils/api-route';
-import { parseCookie } from './_libs/utils/cookie';
+import { parseCookie, serializeCookie } from './_libs/utils/cookie';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { username, password } = authSigaBody.parse(req.body);
@@ -27,8 +27,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   const cookies = parseCookie(String(responseLogin.headers['set-cookie']));
+  const sigaAuthToken = cookies[COOKIE_FIELD_NAME];
+
+  res.setHeader('set-cookie', serializeCookie({
+    'SigaAuthToken': sigaAuthToken,
+  }));
+
   return res.status(200).json({
-    cookie: cookies[COOKIE_FIELD_NAME],
+    cookie: sigaAuthToken,
   });
 }
 
