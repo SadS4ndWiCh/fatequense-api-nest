@@ -2,8 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { getGXStateOf } from './_libs/utils/gxstate';
 import { api } from './_libs/api';
-import { cookieRequestBody } from './_libs/schemas';
-import { withRouteOptions } from './_libs/utils/api-route';
+import { studentGetOptions, withRouteOptions } from './_libs/utils/api-route';
 import { getProfile } from './_libs/scrappers/profile.scrap';
 
 export interface CacheProfile {
@@ -12,7 +11,7 @@ export interface CacheProfile {
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const { cookie } = cookieRequestBody.parse(req.query);
+	const cookie = req.cookies['SigaAuthToken']!;
 
 	const { data: html, success } = await api.get('home', cookie);
 	if (!success) {
@@ -32,12 +31,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
 	const profile = getProfile(gxstate);
 
-	return res.status(200).json({
-		profile
-	});
+	return res.status(200).json({ profile });
 }
 
 export default withRouteOptions({
-	options: { allowedMethods: ['GET'] },
+	options: studentGetOptions,
 	handler
 });

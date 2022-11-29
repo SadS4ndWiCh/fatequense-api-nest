@@ -2,12 +2,12 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { getGXStateOf } from './_libs/utils/gxstate';
 import { api } from './_libs/api';
-import { cookieRequestBody } from './_libs/schemas';
-import { withRouteOptions } from './_libs/utils/api-route';
+
+import { studentGetOptions, withRouteOptions } from './_libs/utils/api-route';
 import { getHistory } from './_libs/scrappers/history.scrap';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const { cookie } = cookieRequestBody.parse(req.query);
+	const cookie = req.cookies['SigaAuthToken']!;
 
 	const { data: html, success } = await api.get('history', cookie);
 	if (!success) {
@@ -27,6 +27,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export default withRouteOptions({
-	options: { allowedMethods: ['GET'] },
+	options: studentGetOptions,
 	handler
 });
