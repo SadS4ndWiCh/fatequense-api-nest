@@ -1,4 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next';
+import NextCors from 'nextjs-cors';
+
 import { parseCookie } from './cookie';
 import { getIP, rateLimit } from './rate-limit';
 
@@ -32,6 +34,12 @@ export const withRouteOptions = ({
 	const limiter = options.rateLimit && rateLimit(options.rateLimit);
 
 	return async (req: NextApiRequest, res: NextApiResponse) => {
+		await NextCors(req, res, {
+			methods: options.allowedMethods,
+			origin: '*',
+			optionsSuccessStatus: 200,
+		});
+
 		if (limiter) {
 			try {
 				const ip = getIP(req);
@@ -55,7 +63,7 @@ export const withRouteOptions = ({
 				.status(400)
 				.json({ error: validation.errorMessage || 'Requisição inválida' });
 		})
-		
+
 		await handler(req, res);
 	};
 }
