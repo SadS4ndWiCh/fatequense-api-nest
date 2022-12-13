@@ -4,32 +4,16 @@ import NextCors from 'nextjs-cors';
 import { parseCookie } from './cookie';
 import { getIP, rateLimit } from './rate-limit';
 
-type Props = {
-	options?: ApiRouteOptions,
-	handler: ApiRoute
-}
-
 const defaultOptions: ApiRouteOptions = {
-	allowedMethods: ['GET', 'POST'],
+	allowedMethods: ['GET'],
 	rateLimit: { requests: 10 },
 	validations: [],
 }
 
-export const studentGetOptions: ApiRouteOptions = {
-	allowedMethods: ['GET'],
-	rateLimit: { requests: 10 },
-	validations: [
-		{
-			fn: req => !!req.cookies['SigaAuthToken'],
-			errorMessage: 'Cookie do Siga não foi informado'
-		}
-	]
-}
-
-export const withRouteOptions = ({
-	handler,
-	options = {} as ApiRouteOptions,
-}: Props) => {
+export const withRouteOptions = (
+	handler: ApiHandler,
+	options: ApiRouteOptions = {} as ApiRouteOptions,
+) => {
 	options = { ...defaultOptions, ...options };
 	const limiter = options.rateLimit && rateLimit(options.rateLimit);
 
