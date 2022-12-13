@@ -4,6 +4,7 @@ export const testAccount = {
 	username: process.env.TEST_SIGA_USERNAME as string,
 	password: process.env.TEST_SIGA_PASSWORD as string
 };
+console.log(testAccount);
 
 export const api = axios.create({
 	baseURL: 'http://localhost:3000/api'
@@ -11,8 +12,8 @@ export const api = axios.create({
 
 export const login = async (authData: { username: string, password: string }) => {
 	try {
-		const { headers } = await api.post('/login', authData);
-		api.defaults.headers.common['cookie'] = headers['set-cookie'] ? headers['set-cookie'][0] : '';
+		const { data } = await api.post('/login', authData);
+		api.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
 	} catch (err) {
 		throw err;
 	}
