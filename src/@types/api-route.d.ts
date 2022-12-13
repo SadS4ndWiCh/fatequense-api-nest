@@ -3,7 +3,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 declare global {
 	type RequestMethods = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'UPDATE' | 'PATCH';
 
-	type ApiRoute = (req: NextApiRequest, res: NextApiResponse) => Promise<any>;
+	interface ApiHandler {
+		(req: NextApiRequest, res: NextApiResponse): Promise<any>;
+	}
 	type ApiValidationCallback = (req: NextApiRequest) => boolean;
 	type ApiValidation = {
 		fn: ApiValidationCallback;
