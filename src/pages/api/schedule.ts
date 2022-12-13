@@ -1,15 +1,21 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-
-import { getGXStateOf } from './_libs/utils/gxstate';
 import { api } from './_libs/api';
-
-import { studentGetOptions, withRouteOptions } from './_libs/utils/api-route';
+import { getGXStateOf } from './_libs/utils/gxstate';
+import { withRouteOptions } from './_libs/utils/api-route';
 import { getSchedules } from './_libs/scrappers/schedules.scrap';
+import { decodeAuthToken, getAuthToken } from './_libs/utils/jwt';
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const cookie = req.cookies['SigaAuthToken']!;
+export default withRouteOptions(async (req, res) => {
+	const token = getAuthToken(req);
+	if (!token) return res
+		.status(400)
+		.json({ error: 'Token de autorização não foi informado' });
+	
+	const decodedToken = decodeAuthToken(token);
+	if (!decodedToken) return res
+		.status(401)
+		.json({ error: 'Token de autorização inválido' });
 
-	const { data: html, success } = await api.get('schedule', cookie);
+	const { data: html, success } = await api.get('schedule', decodedToken.cookie);
 	if (!success) {
 		return res.status(400).json({
 			error: 'Cookie inválido',
@@ -25,9 +31,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	return res.status(200).json({
 		schedule,
 	})
-}
-
-export default withRouteOptions({
-	options: studentGetOptions,
-	handler
 });

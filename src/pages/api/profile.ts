@@ -1,19 +1,21 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-
-import { getGXStateOf } from './_libs/utils/gxstate';
 import { api } from './_libs/api';
-import { studentGetOptions, withRouteOptions } from './_libs/utils/api-route';
+import { getGXStateOf } from './_libs/utils/gxstate';
+import { withRouteOptions } from './_libs/utils/api-route';
 import { getProfile } from './_libs/scrappers/profile.scrap';
+import { decodeAuthToken, getAuthToken } from './_libs/utils/jwt';
 
-export interface CacheProfile {
-	cachedAt: number,
-	profile: IProfile,
-}
+export default withRouteOptions(async (req, res) => {
+	const token = getAuthToken(req);
+	if (!token) return res
+		.status(400)
+		.json({ error: 'Token de autorização não foi informado' });
+	
+	const decodedToken = decodeAuthToken(token);
+	if (!decodedToken) return res
+		.status(401)
+		.json({ error: 'Token de autorização inválido' });
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const cookie = req.cookies['SigaAuthToken']!;
-
-	const { data: html, success } = await api.get('home', cookie);
+	const { data: html, success } = await api.get('home', decodedToken.cookie);
 	if (!success) {
 		return res.status(400).json({
 			error: 'Cookie inválido',
@@ -32,9 +34,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const profile = getProfile(gxstate);
 
 	return res.status(200).json({ profile });
-}
-
-export default withRouteOptions({
-	options: studentGetOptions,
-	handler
 });

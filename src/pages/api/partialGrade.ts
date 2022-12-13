@@ -1,15 +1,21 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-
 import { api } from './_libs/api';
 import { getGXStateOf } from './_libs/utils/gxstate';
-
-import { studentGetOptions, withRouteOptions } from './_libs/utils/api-route';
+import { withRouteOptions } from './_libs/utils/api-route';
 import { getPartialGrade } from './_libs/scrappers/partialGrade.scrap';
+import { decodeAuthToken, getAuthToken } from './_libs/utils/jwt';
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const cookie = req.cookies['SigaAuthToken']!;
+export default withRouteOptions(async (req, res) => {
+	const token = getAuthToken(req);
+	if (!token) return res
+		.status(400)
+		.json({ error: 'Token de autorização não foi informado' });
+	
+	const decodedToken = decodeAuthToken(token);
+	if (!decodedToken) return res
+		.status(401)
+		.json({ error: 'Token de autorização inválido' });
 
-	const { data: html, success } = await api.get('partialGrade', cookie);
+	const { data: html, success } = await api.get('partialGrade', decodedToken.cookie);
 	if (!success) {
 		return res.status(400).json({
 			error: 'Cookie inválido',
@@ -25,9 +31,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 	return res.status(200).json({
 		partialGrades
 	});
-}
-
-export default withRouteOptions({
-	options: studentGetOptions,
-	handler
 });
