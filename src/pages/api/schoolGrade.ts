@@ -1,15 +1,21 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-
-import { getGXStateOf } from './_libs/utils/gxstate';
 import { api } from './_libs/api';
-import { cookieRequestBody } from './_libs/schemas';
+import { getGXStateOf } from './_libs/utils/gxstate';
 import { withRouteOptions } from './_libs/utils/api-route';
 import { getSchoolGrade } from './_libs/scrappers/schoolGrade.scrap';
+import { decodeAuthToken, getAuthToken } from './_libs/utils/jwt';
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
-	const { cookie } = cookieRequestBody.parse(req.query);
-
-	const { data: html, success } = await api.get('schoolGrade', cookie);
+export default withRouteOptions(async (req, res) => {
+	const token = getAuthToken(req);
+	if (!token) return res
+		.status(400)
+		.json({ error: 'Token de autorização não foi informado' });
+	
+	const decodedToken = decodeAuthToken(token);
+	if (!decodedToken) return res
+		.status(401)
+		.json({ error: 'Token de autorização inválido' });
+		
+	const { data: html, success } = await api.get('schoolGrade', decodedToken.cookie);
 	if (!success) {
 		return res.status(400).json({
 			error: 'Cookie inválido',
@@ -21,12 +27,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 		.status(500)
 		.json({ error: 'Ocorreu um problema ao pegar as informações' });
 
-	const semesters = getSchoolGrade(gxstate);
+	const schoolGrade = getSchoolGrade(gxstate);
 
-	return res.status(200).json({ semesters });
-}
-
-export default withRouteOptions({
-	options: { allowedMethods: ['GET'] },
-	handler
+	return res.status(200).json({ schoolGrade });
 });
