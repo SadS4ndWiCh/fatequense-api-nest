@@ -1,5 +1,4 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next';
+import jwt from 'jsonwebtoken';
 
 import { api } from './_libs/api';
 import {
@@ -13,7 +12,10 @@ import { authSigaBody } from './_libs/schemas';
 import { withRouteOptions } from './_libs/utils/api-route';
 import { parseCookie } from './_libs/utils/cookie';
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+const JWT_SECRET = process.env.JWT_SECRET as string;
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN as string
+
+export default withRouteOptions(async (req, res) => {
   const { username, password } = authSigaBody.parse(req.body);
 
   const { res: responseLogin } = await api.post('login', {
@@ -27,12 +29,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   const cookies = parseCookie(String(responseLogin.headers['set-cookie']));
-  return res.status(200).json({
-    cookie: cookies[COOKIE_FIELD_NAME],
-  });
-}
 
-export default withRouteOptions({
-  options: { allowedMethods: ['POST'] },
-  handler
-})
+  const token = jwt.sign(
+    { cookie: cookies[COOKIE_FIELD_NAME] },
+    JWT_SECRET,
+    { expiresIn: JWT_EXPIRES_IN }
+  );
+
+  return res.status(200).json({ token });
+
+}, {
+  allowedMethods: ['POST'],
+});

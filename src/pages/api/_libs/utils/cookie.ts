@@ -10,3 +10,12 @@ export const parseCookie = (cookies: string) => {
 
 	return allCookies;
 }
+
+export const serializeCookie = (cookieObj: Record<string,string>): string => {
+	const cookies = Object
+		.keys(cookieObj)
+		.map(key => `${key}=${encodeURIComponent(cookieObj[key])}`)
+		.join(';');
+	
+		return cookies;
+}
