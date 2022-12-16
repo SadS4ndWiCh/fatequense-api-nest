@@ -20,7 +20,7 @@ export const withRouteOptions = (
 	return async (req: NextApiRequest, res: NextApiResponse) => {
 		await NextCors(req, res, {
 			methods: options.allowedMethods,
-			origin: '*',
+			origin: req.headers.origin ?? '*',
 			optionsSuccessStatus: 200,
 		});
 
