@@ -6,6 +6,7 @@ declare global {
     cpf: string;
     birthday: string;
     averageGrade: number;
+    progression: number;
     photoUrl?: string;
     college: {
       name: string;
