@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Headers, Post } from '@nestjs/common';
 
-import { SigaLoginBody } from '../../dtos/siga-login-body';
+import { SigaLoginBody } from '../dtos/siga-login-body';
 import { LoginWithSiga } from '@application/use-cases/login-with-siga';
 import { GetStudentProfile } from '@application/use-cases/get-student-profile';
 import { ApiService } from '../api/api.service';
