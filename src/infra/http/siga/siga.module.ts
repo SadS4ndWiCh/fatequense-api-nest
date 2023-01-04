@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 import { ApiService } from './api/api.service';
 import { SigaController } from './controllers/siga.controller';
@@ -24,7 +26,13 @@ import { GXState } from '@helpers/gxstate';
 import jwtConfig from '@config/jwt.config';
 
 @Module({
-  imports: [...jwtConfig.asProvider().imports],
+  imports: [
+    ...jwtConfig.asProvider().imports,
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 15,
+    }),
+  ],
   controllers: [SigaController],
   providers: [
     JWT,
@@ -43,6 +51,10 @@ import jwtConfig from '@config/jwt.config';
     GetStudentHistory,
     GetStudentSchedule,
     GetNotices,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
   ],
 })
 export class SigaModule {}
