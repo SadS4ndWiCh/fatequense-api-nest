@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Headers, Post } from '@nestjs/common';
+import { SkipThrottle } from '@nestjs/throttler';
 
 import { SigaLoginBody } from '../dtos/siga-login-body';
 import { LoginWithSiga } from '@application/use-cases/login-with-siga';
@@ -22,6 +23,8 @@ export class SigaController {
     private getStudentSchedule: GetStudentSchedule,
     private getNotices: GetNotices,
   ) {}
+
+  @SkipThrottle()
   @Post('/login')
   async login(@Body() body: SigaLoginBody) {
     const { username, password } = body;
