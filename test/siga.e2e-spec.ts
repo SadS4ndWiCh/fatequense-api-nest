@@ -1,16 +1,15 @@
 import { INestApplication } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
+import { TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
-import { AppModule } from '@infra/app.module';
+
+import { configureTestModule } from './helpers/configure-test-module';
 
 describe('Siga Controller (e2e)', () => {
   let app: INestApplication;
   let token: string;
 
   beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
+    const moduleFixture: TestingModule = await configureTestModule();
 
     app = moduleFixture.createNestApplication();
     await app.init();
