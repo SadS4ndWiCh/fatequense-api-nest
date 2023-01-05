@@ -19,9 +19,11 @@ import { GetStudentPartialAbsences } from '@application/use-cases/get-student-pa
 import { GetStudentHistory } from '@application/use-cases/get-student-history';
 import { GetStudentSchedule } from '@application/use-cases/get-student-schedule';
 import { GetNotices } from '@application/use-cases/get-notices';
+import { ApiTags } from '@nestjs/swagger';
 
 const THREE_HOURS_IN_SECONDS = 1000 * 60 * 3;
 
+@ApiTags('Estudante')
 @Controller()
 export class SigaController {
   constructor(
