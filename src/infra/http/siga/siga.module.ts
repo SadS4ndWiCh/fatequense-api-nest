@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, CacheModule } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
@@ -28,9 +28,9 @@ import jwtConfig from '@config/jwt.config';
 @Module({
   imports: [
     ...jwtConfig.asProvider().imports,
-    ThrottlerModule.forRoot({
+    CacheModule.register({
       ttl: 60,
-      limit: 15,
+      max: 20,
     }),
   ],
   controllers: [SigaController],
