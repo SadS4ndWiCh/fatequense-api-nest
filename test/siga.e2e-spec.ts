@@ -40,6 +40,30 @@ describe('Siga Controller (e2e)', () => {
       });
   });
 
+  // it('/profile (GET) - should return too many requests', async () => {
+  //   const promises: request.Test[] = [];
+  //   for (let i = 0; i < 5; i++) {
+  //     promises.push(
+  //       request(app.getHttpServer())
+  //         .get('/student/profile')
+  //         .set('Authorization', `Bearer ${token}`)
+  //         .set('X-Forwarded-For', '167.250.175.229')
+  //         .expect(i < 4 ? 200 : 429),
+  //     );
+  //   }
+
+  //   const responses = await Promise.allSettled(promises);
+  //   responses.forEach((resp) => {
+  //     console.log(resp);
+  //     expect(resp).not.toEqual(
+  //       expect.objectContaining({
+  //         status: 'rejected',
+  //         reason: expect.anything(),
+  //       }),
+  //     );
+  //   });
+  // });
+
   it('/parial-grade (GET)', () => {
     return request(app.getHttpServer())
       .get('/student/partial-grade')
@@ -101,5 +125,9 @@ describe('Siga Controller (e2e)', () => {
       .get('/student/notices')
       .set('Authorization', `Bearer ${token}`)
       .expect(200);
+  });
+
+  afterEach(async () => {
+    await app.close();
   });
 });
