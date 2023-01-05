@@ -1,6 +1,6 @@
 import { Module, CacheModule } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 import { ApiService } from './api/api.service';
 import { SigaController } from './controllers/siga.controller';
