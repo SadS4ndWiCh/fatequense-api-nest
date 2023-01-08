@@ -3,6 +3,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard } from '@nestjs/throttler';
 
 import { ApiService } from './api/api.service';
+import { AuthCacheInterceptor } from './api/cache.interceptor';
 import { SigaController } from './controllers/siga.controller';
 
 import { LoginWithSiga } from '@application/use-cases/login-with-siga';
@@ -54,6 +55,10 @@ import jwtConfig from '@config/jwt.config';
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: AuthCacheInterceptor,
     },
   ],
 })
