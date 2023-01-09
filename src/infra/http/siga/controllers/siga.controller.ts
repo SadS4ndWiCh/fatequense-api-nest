@@ -12,7 +12,7 @@ import {
   GetStudentPartialAbsences,
   GetStudentHistory,
   GetStudentSchedule,
-} from '@application/use-cases';
+} from '../../../../application/use-cases';
 
 @ApiTags('Estudante')
 @Controller()

@@ -1,9 +1,9 @@
-import { ProfileScrapper } from '@application/scrappers/profile.scrapper';
-import { PartialGradeScrapper } from '@application/scrappers/partialGrade.scrapper';
-import { PartialAbsencesScrapper } from '@application/scrappers/partialAbsences.scrapper';
-import { HistoryScrapper } from '@application/scrappers/history.scrapper';
-import { ScheduleScrapper } from '@application/scrappers/schedule.scrapper';
-import { NoticesScrapper } from '@application/scrappers/notices.scrapper';
+import { ProfileScrapper } from './profile.scrapper';
+import { PartialGradeScrapper } from './partialGrade.scrapper';
+import { PartialAbsencesScrapper } from './partialAbsences.scrapper';
+import { HistoryScrapper } from './history.scrapper';
+import { ScheduleScrapper } from './schedule.scrapper';
+import { NoticesScrapper } from './notices.scrapper';
 
 export {
   ProfileScrapper,

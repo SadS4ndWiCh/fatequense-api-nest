@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
-import { JWT } from '@helpers/jwt';
+// import { JWT } from '@helpers/jwt';
 
-import { ApiService } from '@infra/http/siga/api/api.service';
+import { ApiService } from '../../infra/http/siga/api/api.service';
 import { InvalidCookie } from './errors/invalid-cookie';
-import { ProfileScrapper } from '@application/scrappers/profile.scrapper';
+import { ProfileScrapper } from '../../application/scrappers/profile.scrapper';
 
 interface GetStudentProfileRequest {
   cookie: string;

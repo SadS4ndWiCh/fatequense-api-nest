@@ -4,7 +4,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
 
 import { SigaModule } from './http/siga/siga.module';
 
-import jwtConfiguration from '@config/jwt.config';
+import jwtConfiguration from '../config/jwt.config';
 
 @Module({
   imports: [

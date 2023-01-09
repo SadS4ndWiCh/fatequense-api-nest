@@ -14,7 +14,7 @@ import {
   GetStudentPartialAbsences,
   GetStudentHistory,
   GetStudentSchedule,
-} from '@application/use-cases';
+} from '../../../application/use-cases';
 
 import {
   ProfileScrapper,
@@ -23,12 +23,12 @@ import {
   HistoryScrapper,
   ScheduleScrapper,
   NoticesScrapper,
-} from '@application/scrappers';
+} from '../../../application/scrappers';
 
-import { JWT } from '@helpers/jwt';
-import { GXState } from '@helpers/gxstate';
+import { JWT } from '../../../helpers/jwt';
+import { GXState } from '../../../helpers/gxstate';
 
-import jwtConfig from '@config/jwt.config';
+import jwtConfig from '../../../config/jwt.config';
 
 @Module({
   imports: [

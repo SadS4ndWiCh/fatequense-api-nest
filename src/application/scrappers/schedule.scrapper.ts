@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { GXState } from '@helpers/gxstate';
+import { GXState } from '../../helpers/gxstate';
 import { getDay, setMinutes, setHours, getDate, setDate } from 'date-fns';
 
 @Injectable()
