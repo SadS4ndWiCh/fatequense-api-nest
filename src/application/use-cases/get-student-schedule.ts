@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 
 import { InvalidCookie } from './errors/invalid-cookie';
 
-import { ApiService } from '@infra/http/siga/api/api.service';
-import { ScheduleScrapper } from '@application/scrappers/schedule.scrapper';
+import { ApiService } from '../../infra/http/siga/api/api.service';
+import { ScheduleScrapper } from '../../application/scrappers/schedule.scrapper';
 
 interface GetStudentProfileRequest {
   cookie: string;

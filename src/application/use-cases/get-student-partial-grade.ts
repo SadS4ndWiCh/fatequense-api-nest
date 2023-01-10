@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 
 import { InvalidCookie } from './errors/invalid-cookie';
 
-import { ApiService } from '@infra/http/siga/api/api.service';
-import { PartialGradeScrapper } from '@application/scrappers/partialGrade.scrapper';
-import { JWT } from '@helpers/jwt';
+import { ApiService } from '../../infra/http/siga/api/api.service';
+import { PartialGradeScrapper } from '../../application/scrappers/partialGrade.scrapper';
+// import { JWT } from '@helpers/jwt';
 
 interface GetStudentProfileRequest {
   cookie: string;

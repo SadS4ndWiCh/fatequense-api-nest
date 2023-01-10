@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { GXState } from '@helpers/gxstate';
-import { toTitleCase } from '@helpers/to-title-case';
+import { GXState } from '../../helpers/gxstate';
+import { toTitleCase } from '../../helpers/to-title-case';
 
 @Injectable()
 export class ProfileScrapper {

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
-import { ApiService } from '@infra/http/siga/api/api.service';
+import { ApiService } from '../../infra/http/siga/api/api.service';
 import { FailedToLogin } from './errors/failed-to-login';
-import { parseCookies } from '@helpers/parse-cookie';
-import { JWT } from '@helpers/jwt';
+import { parseCookies } from '../../helpers/parse-cookie';
+import { JWT } from '../../helpers/jwt';
 
 interface LoginWithSigaRequest {
   username: string;

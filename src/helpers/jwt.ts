@@ -1,4 +1,4 @@
-import jwtConfig from '@config/jwt.config';
+import jwtConfig from '../config/jwt.config';
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import {

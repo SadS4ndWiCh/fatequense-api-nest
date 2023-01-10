@@ -4,9 +4,9 @@ import { IncomingHttpHeaders } from 'http2';
 import { request } from 'urllib';
 import { HttpMethod } from 'urllib/src/esm/Request';
 
-import { InvalidToken } from '@application/use-cases/errors/invalid-token';
-import { serializeCookie } from '@helpers/serialize-cookie';
-import { JWT } from '@helpers/jwt';
+import { InvalidToken } from '../../../../application/use-cases/errors';
+import { serializeCookie } from '../../../../helpers/serialize-cookie';
+import { JWT } from '../../../../helpers/jwt';
 
 interface GetRequestProps {
   route: string;
