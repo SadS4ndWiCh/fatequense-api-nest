@@ -15,7 +15,7 @@ const downloadFile = (url: string, filename: string): void => {
   });
 };
 
-export const createStaticSwagger = (port: string, path: string): void => {
+export const downloadSwaggerFiles = (port: string, path: string): void => {
   const baseUrl = `http://localhost:${port}/${path}`;
 
   const swaggerFilesToDownload = [
