@@ -5,5 +5,5 @@ export const swaggerConfig = new DocumentBuilder()
   .setDescription(
     'API para acessar informações de estudantes da faculdade Fatec',
   )
-  .setVersion('v2.0.0')
+  .setVersion('v2.1.0')
   .build();
